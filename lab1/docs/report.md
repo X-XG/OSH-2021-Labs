@@ -12,17 +12,17 @@
 
 ##### 直接编译未裁剪的内核
 
-![https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/1.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414094925795.png)
+![https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/1.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414094925795.png)
 
 屏幕上有输出，说明成功编译。
 
 ##### 裁剪Linux内核
 
-![https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/2.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414095247604.png)
+![https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/2.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414095247604.png)
 
 得到内核大小5,478,912B，小于6MB，并能够完成「初始内存盘」中的全部任务。
 
-![https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/3.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414095655142.png)
+![https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/3.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414095655142.png)
 
 ## 初始内存盘
 
@@ -32,7 +32,7 @@
 
 学习了与理解了Make命令的概念与意义，能看懂简单的Makefile文件，用make命令构建了能启动的bootloader.img文件。
 
-![https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/4.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414101353229.png)
+![https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/4.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414101353229.png)
 
 ##### 第一组问题
 
@@ -50,7 +50,7 @@
 
   在loader.asm中的第190行增加代码`NewLine: db 'I am OK!'`在第167行增加代码`log_info NewLine, 8, 4`重新make后运行如下。
 
-![https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/5.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414134633192.png)
+![https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/5.png](C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414134633192.png)
 
 成功在最后一行增加了输出，且不覆盖其他输出。并将重新make得到的img文件上传至github。
 
@@ -94,10 +94,10 @@
 
   Windows下的EFI目录：
 
-  <img src="C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414222904718.png" alt="https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/6.png" style="zoom:67%;" />
+  <img src="C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414222904718.png" alt="https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/6.png" style="zoom:67%;" />
 
   包含了bootmgfw.efi、bootmgr.efi、memtest.efi等文件与文件夹。
 
-  <img src="C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414223034643.png" alt="https://github.com/X-XG/OSH-2021-Labs/blob/master/lab1/docs/pics/7.png" style="zoom:67%;" />
+  <img src="C:\Users\93416\AppData\Roaming\Typora\typora-user-images\image-20210414223034643.png" alt="https://github.com/X-XG/OSH-2021-Labs/lab1/docs/pics/7.png" style="zoom:67%;" />
 
   总共包含了98个文件，36个文件夹。

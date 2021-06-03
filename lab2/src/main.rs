@@ -231,8 +231,7 @@ fn excute(
 
     if cmdchange.find('~').is_some() {
         let offset = cmdchange.find('~').unwrap();
-        println!("{:?}",cmd.get(offset-1..offset));
-        println!("{:?}",cmd.get(offset+1..offset+2));
+
         if cmd.get(offset-1..offset) == Some(&" ") &&
            ( cmd.get(offset+1..offset+2) == Some(&"\n") || 
              cmd.get(offset+1..offset+2) == Some(&" ") ) {

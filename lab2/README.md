@@ -4,7 +4,7 @@
 
 #### 编译
 
-使用cargo进行编译运行。
+使用cargo进行编译运行，rust为nightly版本（1.54.0-nightly）。
 
 #### 选做内容
 

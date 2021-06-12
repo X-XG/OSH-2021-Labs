@@ -23,6 +23,7 @@ void* handle_chat(void* data) {
     char buffer[BUF];
     ssize_t len;
     int start = 8;
+
     while (1) {
         len = recv(info->fd_recv, buffer, BUF - 12, 0);
         if (len <= 0) {
@@ -67,11 +68,13 @@ int main(int argc, char** argv) {
         perror("socket");
         return 1;
     }
+
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = INADDR_ANY;
     addr.sin_port = htons(port);
     socklen_t addr_len = sizeof(addr);
+
     if (bind(fd, (struct sockaddr*)&addr, sizeof(addr))) {
         perror("bind");
         return 1;
@@ -90,6 +93,7 @@ int main(int argc, char** argv) {
             perror("accept");
             return 1;
         }
+        
         for (i = 0;i < MAX_USERS;i++) {
             if (used[i] == 0) {
                 used[i] = 1;

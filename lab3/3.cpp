@@ -20,16 +20,21 @@ void handle_chat(int myid) {
     char buffer[BUF];
     ssize_t len;
     int start = 8;
+    bool first_recv = true;
 
     sprintf(msg, "user %2d:", myid);
 
     while (1) {
         len = recv(client[myid], buffer, BUF - 12, 0);
         if (len <= 0) {
-            used[myid] = 0;
-            close(client[myid]);
+            if (first_recv) {
+                used[myid] = 0;
+                close(client[myid]);
+                return;
+            }
             return;
         }
+        first_recv = false;
 
         int i, j;
         int sig = 0;
@@ -41,10 +46,10 @@ void handle_chat(int myid) {
 
                 for (j = 0;j < MAX_USERS;j++) {
                     if (used[j] && j != myid) {
-                        int remain = strlen(msg);
-                        int sended = 0;;
+                        int remain = start + num;
+                        int sended = 0;
                         while (remain > 0) {
-                            sended = send(client[j], msg, start + num, 0);
+                            sended = send(client[j], msg + sended, remain, 0);
                             if (sended == -1) {
                                 perror("send");
                                 exit(-1);
@@ -74,11 +79,13 @@ int main(int argc, char** argv) {
         perror("socket");
         return 1;
     }
+
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = INADDR_ANY;
     addr.sin_port = htons(port);
     socklen_t addr_len = sizeof(addr);
+
     if (bind(fd, (struct sockaddr*)&addr, sizeof(addr))) {
         perror("bind");
         return 1;
@@ -97,7 +104,7 @@ int main(int argc, char** argv) {
         for (i = 0;i < MAX_USERS;i++) {
             if (used[i])FD_SET(client[i], &fds);
         }
-        
+
         if (select(supfd + 1, &fds, NULL, NULL, NULL) > 0) {
             if (FD_ISSET(fd, &fds)) {
                 int new_client = accept(fd, NULL, NULL);
@@ -107,7 +114,7 @@ int main(int argc, char** argv) {
                 }
 
                 fcntl(new_client, F_SETFL, fcntl(new_client, F_GETFL, 0) | O_NONBLOCK);
-                
+
                 if (supfd < new_client) {
                     supfd = new_client;
                 }

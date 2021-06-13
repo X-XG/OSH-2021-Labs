@@ -19,16 +19,17 @@ int used[MAX_USERS] = { 0 };
 
 void* handle_chat(void* data) {
     struct Info* info = (struct Info*)data;
-    char msg[1050000] = "Message:";
     char buffer[BUF];
     ssize_t len;
     int start = 8;
 
+    char msg[1050000] = "";
+    sprintf(msg,"user %2d:",info->myid);
+    
     while (1) {
         len = recv(info->fd_recv, buffer, BUF - 12, 0);
         if (len <= 0) {
             used[info->myid] = 0;
-            pthread_mutex_unlock(&mutex);
             return 0;
         }
 

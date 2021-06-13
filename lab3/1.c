@@ -30,7 +30,17 @@ void* handle_chat(void* data) {
                 num = i - sig + 1;
                 strncpy(msg + start, buffer + sig, num);
 
-                send(pipe->fd_recv, msg, start + num, 0);
+                int remain = start + num;
+                int sended = 0;
+                while (remain > 0) {
+                    sended = send(pipe->fd_recv, msg + sended, remain, 0);
+                    if (sended == -1) {
+                        perror("send");
+                        exit(-1);
+                    }
+                    remain -= sended;
+                }
+
                 sig = i + 1;
                 start = 8;
             }
@@ -87,6 +97,6 @@ int main(int argc, char** argv) {
     pthread_create(&thread2, NULL, handle_chat, (void*)&pipe2);
     pthread_join(thread1, NULL);
     pthread_join(thread2, NULL);
-    
+
     return 0;
 }

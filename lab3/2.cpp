@@ -30,6 +30,7 @@ void* handle_chat(void* data) {
         len = recv(info->fd_recv, buffer, BUF - 12, 0);
         if (len <= 0) {
             used[info->myid] = 0;
+            close(client[info->myid]);
             return 0;
         }
 
@@ -44,7 +45,16 @@ void* handle_chat(void* data) {
                 pthread_mutex_lock(&mutex);
                 for (j = 0;j < MAX_USERS;j++) {
                     if (used[j] && j != info->myid) {
-                        send(client[j], msg, start + num, 0);
+                        int remain = start + num;
+                        int sended = 0;
+                        while (remain > 0) {
+                            sended = send(client[j], msg + sended, remain, 0);
+                            if (sended == -1) {
+                                perror("send");
+                                exit(-1);
+                            }
+                            remain -= sended;
+                        }
                     }
                 }
                 pthread_mutex_unlock(&mutex);
